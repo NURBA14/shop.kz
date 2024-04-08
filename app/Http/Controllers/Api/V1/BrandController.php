@@ -3,27 +3,32 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Api\V1\product\ProductIndexResource;
-use App\Http\Resources\Api\V1\product\ProductShowResource;
-use App\Models\Product;
+use App\Http\Requests\Api\V1\Brand\BrandStoreRequest;
+use App\Http\Resources\Api\V1\brand\BrandIndexResource;
+use App\Http\Resources\Api\V1\brand\BrandShowResource;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return response()->json(["products" => ProductIndexResource::collection(Product::active()->get())]);
+
+        return response()->json(["brands" => BrandIndexResource::collection(Brand::all())]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BrandStoreRequest $request)
     {
-        // 
+        $brand = Brand::create([
+            "name" => $request->validated("name")
+        ]);
+        return response()->json(["brand" => new BrandShowResource($brand)], 201);
     }
 
     /**
@@ -31,7 +36,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        return response()->json(["product" => new ProductShowResource(Product::active()->findOrFail($id))]);
+        return response()->json(["brand" => new BrandShowResource(Brand::findOrFail($id))]);
     }
 
     /**
