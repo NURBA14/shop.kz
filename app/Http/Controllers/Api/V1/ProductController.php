@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("auth:sanctum")->only(["store", "update", "destroy"]);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -28,8 +32,6 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request)
     {
-        // TODO AUTH-USER
-        auth()->login(User::inRandomOrder()->firstOr());
         $product = Auth::user()->products()->create([
             "name" => $request->validated("name"),
             "description" => $request->validated("description"),
@@ -94,7 +96,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        if ($product->has("images")) {
+        if ($product->images->count()) {
             foreach ($product->images as $image) {
                 Storage::delete($image->url);
                 $image->delete();

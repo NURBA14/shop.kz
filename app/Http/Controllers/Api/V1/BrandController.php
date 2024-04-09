@@ -12,12 +12,16 @@ use Illuminate\Http\Request;
 
 class BrandController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware("auth:sanctum")->only(["store", "update", "destroy"]);
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-
         return response()->json(["brands" => BrandIndexResource::collection(Brand::all())]);
     }
 
@@ -56,7 +60,7 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        if ($brand->has("products")) {
+        if ($brand->products->count()) {
             return response()->json(["message" => "This brand has products"], 400);
         } else {
             $brand->delete();

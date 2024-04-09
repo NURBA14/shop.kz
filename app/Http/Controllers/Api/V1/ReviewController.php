@@ -11,9 +11,12 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    public function store(ReviewStoreRequest $request, Product $product)
+    public function __construct()
     {
-        auth()->login(User::inRandomOrder()->firstOr());
+        $this->middleware("auth:sanctum")->only("store");
+    }
+    public function store(ReviewStoreRequest $request, Product $product)
+    {        
         $product->reviews()->create([
             "text" => $request->validated("text"),
             "rating" => $request->validated("rating"),

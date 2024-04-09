@@ -12,6 +12,10 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("auth:sanctum")->only(["store", "update", "destroy"]);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -55,7 +59,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if($category->has("products")){
+        if($category->products->count()){
             return response()->json(["message" => "This category has products"], 400);
         }else{
             $category->delete();
