@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Brand\BrandStoreRequest;
+use App\Http\Requests\Api\V1\Brand\BrandUpdateRequest;
 use App\Http\Resources\Api\V1\brand\BrandIndexResource;
 use App\Http\Resources\Api\V1\brand\BrandShowResource;
 use App\Models\Brand;
@@ -42,9 +43,12 @@ class BrandController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(BrandUpdateRequest $request, Brand $brand)
     {
-        //
+        $brand->update([
+            "name" => $request->validated("name")
+        ]);
+        return response()->json(["brand" => new BrandShowResource($brand)]);
     }
 
     /**
@@ -52,7 +56,11 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        $brand->delete();
-        return response()->json(["message" => "success"], 200);
+        if ($brand->has("products")) {
+            return response()->json(["message" => "This brand has products"], 400);
+        } else {
+            $brand->delete();
+            return response()->json(["message" => "success"], 200);
+        }
     }
 }
