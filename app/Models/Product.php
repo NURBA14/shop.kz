@@ -5,13 +5,11 @@ namespace App\Models;
 use App\Models\Scopes\ActiveScope;
 use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[ScopedBy([ActiveScope::class])]
 class Product extends Model
 {
     use HasFactory;
@@ -50,14 +48,23 @@ class Product extends Model
         // TODO Images List
         return $this->images->map(fn($image) => asset($image->url));
     }
-    public function scopeActive(Builder $query)
-    {
-        return $query->where("is_active", "=", 1);
-    }
-
     public function getCreatedAtAttribute($value)
     {
         $createdAt = Carbon::parse($value);        
         return $createdAt->format('Y:m:d H:i:s');
+    }
+
+    public function scopeActive(Builder $query)
+    {
+        $query->where("is_active", "=", 1);
+    }
+
+    public function isActive()
+    {
+        if($this->is_active == 1){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

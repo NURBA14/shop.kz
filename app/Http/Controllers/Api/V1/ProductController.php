@@ -17,14 +17,15 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware("auth:sanctum")->only(["store", "update", "destroy"]);
+        $this->middleware(["auth:sanctum", "admin"])->only(["store", "update", "destroy"]);
+        $this->middleware(["product"])->only(["show"]);
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return response()->json(["products" => ProductIndexResource::collection(Product::all())]);
+        return response()->json(["products" => ProductIndexResource::collection(Product::active()->get())]);
     }
 
     /**
