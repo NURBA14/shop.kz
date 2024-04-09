@@ -16,7 +16,7 @@ class ImageShowResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "url" => $this->url,
+            "url" => asset($this->url),
             "product" => [
                 "id" => $this->product->id,
                 "name" => $this->product->name,

@@ -20,12 +20,16 @@ class BrandProductListResource extends JsonResource
             "description" => $this->description,
             "price" => $this->price,
             "count" => $this->count,
+            "rating" => $this->rating(),
+            "brand" => $this->brand->name,
             "category" => $this->category->name,
             "created_at" => $this->created_at,
+            // TODO Images List
+            "images" => $this->getImagesList(),
             "user" => [
                 "id" => $this->user->id,
                 "name" => $this->user->name,
-            ]
+            ],
         ];
     }
 }

@@ -33,9 +33,9 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Category $category)
     {
-        return response()->json(["category" => new CategoryShowResource(Category::findOrFail($id))]);
+        return response()->json(["category" => new CategoryShowResource($category)]);
     }
 
     /**
@@ -49,8 +49,9 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return response()->json(["message" => "success"], 200);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api\V1\Brand;
+namespace App\Http\Requests\Api\V1\Review;
 
 use App\Http\Requests\ApiRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class BrandStoreRequest extends ApiRequest
+class ReviewStoreRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,8 @@ class BrandStoreRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            "name" => "required|max:255|string"
+            "text" => "required|string",
+            "rating" => "required|integer",
         ];
     }
 }

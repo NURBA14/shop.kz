@@ -34,9 +34,9 @@ class BrandController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Brand $brand)
     {
-        return response()->json(["brand" => new BrandShowResource(Brand::findOrFail($id))]);
+        return response()->json(["brand" => new BrandShowResource($brand)]);
     }
 
     /**
@@ -50,8 +50,9 @@ class BrandController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Brand $brand)
     {
-        //
+        $brand->delete();
+        return response()->json(["message" => "success"], 200);
     }
 }
