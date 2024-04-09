@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Exceptions\Product\ProductIsNotActiveException;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,8 @@ class ProductMiddleware
         if ($product->isActive()) {
             return $next($request);
         } else {
-            return response()->json(["message" => "Product Not Found"], 404);
+            throw new ProductIsNotActiveException();
+            // return response()->json(["message" => __("messages.model_not_found")], 404);
         }
     }
 }

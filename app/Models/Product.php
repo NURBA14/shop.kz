@@ -45,8 +45,7 @@ class Product extends Model
     }
     public function getImagesList()
     {
-        // TODO Images List
-        return $this->images->map(fn($image) => asset($image->url));
+        return $this->images->map(fn($image) => asset($image->url))->toArray();
     }
     public function getCreatedAtAttribute($value)
     {
@@ -58,7 +57,6 @@ class Product extends Model
     {
         $query->where("is_active", "=", 1);
     }
-
     public function isActive()
     {
         if($this->is_active == 1){

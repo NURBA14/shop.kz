@@ -2,7 +2,11 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Product\ProductIsNotActiveException;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -41,8 +45,30 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function (ProductIsNotActiveException $e) {
+            return responseFailed(__("messages.model_not_found"), 404);
         });
+    }
+
+    /**
+     * render
+     *
+     * @param mixed request
+     * @param Throwable e
+     *
+     * @return void
+     */
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof ModelNotFoundException) {
+            return responseFailed(__("messages.model_not_found"), 404);
+        }
+        $this->renderable(function (NotFoundHttpException $e){
+            return responseFailed(__("messages.route_not_found"), 404);
+        });
+        $this->renderable(function (AuthenticationException $e){
+            return responseFailed(__("messages.auth_error"), 401);
+        });
+        return parent::render($request, $e);
     }
 }
