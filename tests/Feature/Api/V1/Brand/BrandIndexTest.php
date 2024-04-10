@@ -14,12 +14,12 @@ class BrandIndexTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        Brand::factory(100)->create();
+        Brand::factory(20)->create();
     }
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function test_brand_index(): void
     {
         $response = $this->get('/api/v1/brands');
         $response->assertJsonStructure([

@@ -18,7 +18,7 @@ class CategoryIndexTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function test_category_index(): void
     {
         $response = $this->get('/api/v1/categories');
         $response->assertJsonStructure([

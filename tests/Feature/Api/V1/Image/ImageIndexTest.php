@@ -26,7 +26,7 @@ class ImageIndexTest extends TestCase
             "product_id" => $product->id
         ]);
     }
-    public function test_example(): void
+    public function test_image_index(): void
     {
         $response = $this->get('/api/v1/images');
         $response->assertJsonStructure([

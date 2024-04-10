@@ -33,7 +33,7 @@ class ImageShowTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function test_image_show(): void
     {
         $response = $this->get('/api/v1/images/' . self::$image->id);
         $response->assertJsonStructure([

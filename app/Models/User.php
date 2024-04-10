@@ -53,11 +53,18 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class);
     }
-
-
     public function getCreatedAtAttribute($value)
     {
         $createdAt = Carbon::parse($value);        
         return $createdAt->format('Y:m:d H:i:s');
+    }
+
+    public function getAdmin()
+    {
+        if($this->is_admin == 1){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

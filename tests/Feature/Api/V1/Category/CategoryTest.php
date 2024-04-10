@@ -32,7 +32,7 @@ class CategoryTest extends TestCase
         $response->assertOk();
     }
 
-    public function test_create_brand()
+    public function test_create_category()
     {
         $response = $this->withHeaders([
             "Authorization" => "Bearer " . self::$token
@@ -52,7 +52,7 @@ class CategoryTest extends TestCase
         $response->assertStatus(201);
     }
 
-    public function test_update_brand_put()
+    public function test_update_category_put()
     {
         $response = $this->withHeaders([
             "Authorization" => "Bearer " . self::$token
@@ -72,7 +72,7 @@ class CategoryTest extends TestCase
     }
 
 
-    public function test_product_update_patch()
+    public function test_update_category_patch()
     {
         $response = $this->withHeaders([
             "Authorization" => "Bearer " . self::$token
@@ -91,7 +91,7 @@ class CategoryTest extends TestCase
         $response->assertOk();
     }
 
-    public function test_product_delete()
+    public function test_category_delete()
     {
         $response = $this->withHeaders([
             "Authorization" => "Bearer " . self::$token

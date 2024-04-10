@@ -47,7 +47,7 @@ class BrandShowTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function test_brand_show(): void
     {
         $response = $this->get("/api/v1/brands/" . self::$brand->id);
         $response->assertJsonStructure([

@@ -72,7 +72,7 @@ class BrandTest extends TestCase
     }
 
 
-    public function test_product_update_patch()
+    public function test_update_brand_patch()
     {
         $response = $this->withHeaders([
             "Authorization" => "Bearer " . self::$token
@@ -91,7 +91,7 @@ class BrandTest extends TestCase
         $response->assertOk();
     }
 
-    public function test_product_delete()
+    public function test_brand_delete()
     {
         $response = $this->withHeaders([
             "Authorization" => "Bearer " . self::$token
