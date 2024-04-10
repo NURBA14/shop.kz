@@ -65,4 +65,17 @@ class Product extends Model
             return false;
         }
     }
+    public function getReviews()
+    {
+        return $this->reviews->map(fn($review) => [
+            "id" => $review->id,
+            "text" => $review->text,
+            "rating" => $review->rating,
+            "user" => [
+                "id" => $review->user->id,
+                "name" => $review->user->name
+            ],
+            "created_at" => $review->created_at,
+        ]);
+    }
 }

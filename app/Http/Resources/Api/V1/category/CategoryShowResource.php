@@ -19,7 +19,7 @@ class CategoryShowResource extends JsonResource
             "id" => $this->id,
             "name" => $this->name,
             "created_at" => $this->created_at,
-            "product_count" => $this->getProductsCount(),
+            "products_count" => $this->getProductsCount(),
             "products" => CategoryProductListResource::collection($this->products)
         ];
     }

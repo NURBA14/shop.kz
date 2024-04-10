@@ -17,7 +17,7 @@ class CategoryIndexResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
-            "product_count" => $this->getProductsCount(),
+            "products_count" => $this->getProductsCount(),
             "created_at" => $this->created_at
         ];
     }
